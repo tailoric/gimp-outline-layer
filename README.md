@@ -1,6 +1,6 @@
 # gimp-outline-layer
 A small gimp scheme script for quickly creating an outline for the current layer.
-This small script was mostly made by me to practice some Lisp/Scheme via gimp and also making a common task I do in gimp more convenient to do.
+This small script was mostly made by me to practice some Lisp/Scheme via GIMP and also making a common task I do in GIMP more convenient to do.
 
 # Installation 
 Download the `script-fu-outline.scm` file from [the release page](https://github.com/tailoric/gimp-outline-layer/releases)  
