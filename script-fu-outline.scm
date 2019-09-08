@@ -15,32 +15,37 @@
 (script-fu-menu-register "script-fu-outline" "<Image>/Edit")
 (define (script-fu-outline inImage inLayer inBorderSize inBorderColor doMergeWitLayer)
   (let* (        
-        (inLayerName (car (gimp-item-get-name inLayer)))
-        (currentForegroundColor (car (gimp-context-get-foreground))) ;get the current foreground color to reset later
-        (borderLayerHeight (+ (car (gimp-drawable-height inLayer)) inBorderSize))
-        (borderLayerWidth (+ (car (gimp-drawable-width inLayer)) inBorderSize))
-        (borderLayerPosition (+ (car (gimp-image-get-item-position inImage inLayer) ) 1))
-        (borderLayerOffsets (gimp-drawable-offsets inLayer))
-        (theBorderLayer (car
-                          (gimp-layer-new
-                            inImage
-                            borderLayerWidth
-                            borderLayerHeight
-                            RGB-IMAGE
-                            (string-append "Border Layer of '" inLayerName "'")
-                            100
-                            LAYER-MODE-NORMAL-LEGACY
-                            )
-                         )
-        )
+            (inLayerName (car (gimp-item-get-name inLayer)))
+            (currentForegroundColor (car (gimp-context-get-foreground))) ;get the current foreground color to reset later
+            (borderLayerHeight (+ (car (gimp-drawable-height inLayer)) inBorderSize))
+            (borderLayerWidth (+ (car (gimp-drawable-width inLayer)) inBorderSize))
+            (borderLayerPosition (+ (car (gimp-image-get-item-position inImage inLayer) ) 1))
+            (borderLayerOffsets (gimp-drawable-offsets inLayer))
+            (theBorderLayer (car
+                              (gimp-layer-new
+                                inImage
+                                borderLayerWidth
+                                borderLayerHeight
+                                RGB-IMAGE
+                                (string-append "Border Layer of '" inLayerName "'")
+                                100
+                                LAYER-MODE-NORMAL-LEGACY)))
         )
         (gimp-image-undo-group-start inImage)
         (gimp-selection-clear inImage);remove current selection if there
         ;initialize the border layer
         (gimp-image-add-layer inImage theBorderLayer borderLayerPosition)
-        (gimp-layer-set-offsets theBorderLayer (car borderLayerOffsets) (cadr borderLayerOffsets))
+        (gimp-layer-set-offsets 
+          theBorderLayer 
+          (car borderLayerOffsets) 
+          (cadr borderLayerOffsets))
         (gimp-layer-add-alpha theBorderLayer)
-        (gimp-layer-resize theBorderLayer (+ borderLayerWidth inBorderSize) (+ borderLayerHeight inBorderSize) inBorderSize inBorderSize)
+        (gimp-layer-resize 
+          theBorderLayer 
+          (+ borderLayerWidth inBorderSize) 
+          (+ borderLayerHeight inBorderSize) 
+          inBorderSize 
+          inBorderSize)
         (plug-in-colortoalpha RUN-NONINTERACTIVE inImage theBorderLayer '(0 0 0))
         ;select the outline of the current layer
         (gimp-image-select-item inImage CHANNEL-OP-ADD inLayer)
@@ -54,16 +59,16 @@
           0
           TRUE
           0
-          0
-        )
+          0)
         (gimp-context-set-foreground currentForegroundColor)
         (gimp-selection-clear inImage)
-        (when (equal? doMergeWitLayer TRUE) (gimp-image-merge-down
-                                inImage
-                                inLayer
-                                CLIP-TO-BOTTOM-LAYER
-                               )
+        (when (equal? doMergeWitLayer TRUE) 
+              (gimp-image-merge-down
+                inImage
+                inLayer
+                CLIP-TO-BOTTOM-LAYER)
         )
+        (gimp-displays-flush)
         (gimp-image-undo-group-end inImage)
    )
 )
