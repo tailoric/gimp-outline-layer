@@ -5,7 +5,7 @@ This small script was mostly made by me to practice some Lisp/Scheme via GIMP an
 ![Script Demonstration](/outline-script-demo.gif)
 
 # Installation 
-Download the `script-fu-outline.scm` file from [the release page](https://github.com/tailoric/gimp-outline-layer/releases)  
+Download the `script-fu-outline.scm` file from [the release page](https://github.com/tailoric/gimp-outline-layer/releases) or [download it directly](https://raw.githubusercontent.com/tailoric/gimp-outline-layer/master/script-fu-outline.scm)  
 Locate your script folder in Gimp via `Edit` -> `Preferences` -> `Folders` -> `Scripts`  
 There you can find the paths to your script folder(s) or create a new one  
 copy the path to the folder and put the `script-fu-outline.scm` file into that folder.
